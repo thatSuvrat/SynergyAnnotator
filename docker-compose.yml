@@ -1,0 +1,32 @@
+services: 
+  ollama: 
+    container_name: ollama
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    volumes:
+      - ollama_models:/root/.ollama
+    ports: 
+      - "11434:11434"
+
+  # backend:
+  #   container_name : backend
+  #   build: ./backend
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - ollama
+  #   environment: 
+  #     OLLAMA_HOST: http://ollama:11434
+  #   ports:
+  #     - "8000:8000"
+
+  frontend:
+    container_name: frontend
+    build: ./frontend 
+    restart: unless-stopped
+    # depends_on:
+    #   - backend
+    ports: 
+      - "3000:3000"
+
+volumes: 
+  ollama_models:
